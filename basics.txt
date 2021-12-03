@@ -1,0 +1,54 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import os
+import seaborn as sns
+
+df=pd.read_csv('iris.csv')
+df.head()
+
+df.describe() #view some basic statistical details.
+
+df.to_string()
+
+df.info() #print a  summary of a DataFrame.
+
+df
+
+df["variety"].value_counts() #classify and count the colume variety
+
+df.isnull().sum() #check for null values..return the count of null values
+
+#histogram
+df['sepal.width'].hist()  
+
+df['sepal.length'].hist()
+
+#plotting graph
+plt.plot(df["sepal.length"],"r--")   
+plt.show()
+
+plt.plot(df["sepal.width"],"r--")
+plt.show()
+
+#scatter diagram
+df.plot(kind ="scatter",x ='sepal.length',y ='petal.length')    
+plt.grid()
+
+colors=['red','orange','blue']
+variety=['Versicolor','Setosa','Virginica']
+for i in range(3):
+    x=df[df['variety']==variety[i]]
+    plt.scatter(x['sepal.length'],x['sepal.width'],c=colors[i],label=variety[i])
+    plt.xlabel('sepal.length')
+    plt.ylabel('sepal.width')
+    plt.legend()
+
+iris = sns.load_dataset('iris')
+sns.set_style("whitegrid")
+sns.FacetGrid(iris, hue ="species",height = 6).map(plt.scatter,'sepal_length','petal_length').add_legend()
+
+
+
+
+

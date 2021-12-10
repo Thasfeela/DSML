@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+datasets = pd.read_csv('50_Startups.csv')
+
+X = datasets.iloc[:, :1].values
+Y = datasets.iloc[:, 1:2].values
+
+from sklearn.model_selection import train_test_split
+X_Train, X_Test, Y_Train, Y_Test = train_test_split(X, Y, test_size = 1/3, random_state = 0)
+
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_Train, Y_Train)
+Y_Pred = regressor.predict(X_Test)
+
+plt.scatter(X_Train, Y_Train, color = 'red')
+plt.plot(X_Train, regressor.predict(X_Train), color = 'blue')
+plt.title('Salary vs Experience  (Training Set)')
+plt.xlabel('Years of experience')
+plt.ylabel('Salary')
+plt.show()
+
+plt.scatter(X_Test, Y_Test, color = 'red')
+plt.plot(X_Train, regressor.predict(X_Train), color = 'blue')
+plt.title('Salary vs Experience  (Training Set)')
+plt.xlabel('Years of experience')
+plt.ylabel('Salary')
+plt.show()
+
+
+X = datasets[['Administration', 'Marketing Spend']]
+y = datasets['Profit']
+
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2, random_state=0)
+
+from sklearn import linear_model
+regr = linear_model.LinearRegression()
+regr.fit(X, y)
+
+from sklearn import metrics
+y_pred= regr.predict(X_test)
+print('Mean squared error is:', metrics.mean_squared_error(y_test,y_pred))
+CO= regr.predict([[2000,1400]])
+print('Profit for Administration = 91391.77 and Marketing Spend = 366168.42 is ',CO)
+

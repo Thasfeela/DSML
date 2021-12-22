@@ -1,0 +1,26 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split 
+from sklearn import metrics
+
+pima = pd.read_csv("iris.csv")
+
+feature_cols = ['sepal.length', 'sepal.width', 'petal.length','petal.width']
+d={'Setosa':1,'Versicolor':2,'Virginica':3}
+pima['variety']=pima['variety'].map(d)
+print(pima)
+
+X =pima[feature_cols]
+y = pima['variety']
+print(y)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) # 70% training and 30% test
+
+clf = DecisionTreeClassifier()
+clf = clf.fit(X_train,y_train)
+test = clf.predict(X_test)
+train = clf.predict(X_train)
+
+print("Test accuracy ",metrics.accuracy_score(y_true=y_test,y_pred=test))
+print("Train accuracy ",metrics.accuracy_score(y_true=y_train,y_pred=train))
+
